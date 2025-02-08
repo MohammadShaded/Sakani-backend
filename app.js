@@ -1,11 +1,11 @@
-const express = require("express");
-require("dotenv").config();
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
 
-const userRoutes = require("./routes/userRoutes");
-const propertyRoutes = require("./routes/propertiesRoutes");
+import userRoutes from "./routes/userRoutes.js"; // Add .js extension
+import propertyRoutes from "./routes/propertiesRoutes.js"; // Add .js extension
 
 const app = express();
 
