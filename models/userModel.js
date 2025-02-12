@@ -7,6 +7,13 @@ export const createUser = async (userData) => {
     VALUES (?,?,?,?,?,?,?)
     `;
     const values = [user_id, full_name, email, hashedPassword, phone, role, profile_picture];
+    console.log(userData);
     const [result] = await pool.execute(query, values);
+    return result;
+}
+
+export const getUserByEmail = async (email)=>{
+    const query = `SELECT * FROM users WHERE email =?`;
+    const [result] = await pool.execute(query, [email]);
     return result;
 }
