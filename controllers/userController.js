@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail } from "../models/userModel.js";
+import { createUser, getUserByEmail,getUserById } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import uuid4 from "uuid4";
 import jwt from 'jsonwebtoken';
@@ -54,4 +54,23 @@ export const loginUser = async (req, res) => {
     console.error("Login error:", error);
     res.status(500).json({ message: "Internal server error" });
 }
+}
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const result = await getUserById(userId);
+        if(!result) return res.status(404).json({message: 'User not found'})
+        const user = result[0];
+
+        const baseUrl = process.env.BASE_URL;
+        if(user.profile_picture) {
+            user.profile_picture = `${baseUrl}/${user.profile_picture}`;
+        }
+
+        res.json(user);
+    }catch(error){
+        console.error("Erro Featching User: ", error)
+        res.status(500).json({message: "Internal server error"})
+    }
 }
