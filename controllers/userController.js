@@ -2,7 +2,7 @@ import { createUser, getUserByEmail,getUserById } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import uuid4 from "uuid4";
 import jwt from 'jsonwebtoken';
-
+import fs from "fs";
 export const registerUser = async (req, res) => {
     try {
         const { full_name, email, password, phone, role } = req.body;
@@ -11,12 +11,16 @@ export const registerUser = async (req, res) => {
         const user_id = uuid4();
             
         const user = await getUserByEmail(email, password);
-        if (user) return res.status(401).json({message: 'this email is already in use'});
+        if (user){ 
+            if (req.file) fs.unlinkSync(req.file.path); // Delete file if email exists
+            return res.status(401).json({message: 'this email is already in use'});
+        }
 
         await createUser({ user_id,full_name, email, password, phone, role, profile_picture, hashedPassword });
 
         res.status(201).json({ message: "user registered successfully" })
     } catch (err) {
+        if (req.file) fs.unlinkSync(req.file.path); // Delete file on any error
         res.status(500).json({ message: "server error", err })
     };
 
