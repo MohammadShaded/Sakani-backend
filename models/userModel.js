@@ -23,3 +23,9 @@ export const getUserById = async (userId) => {
     const [result]  = await pool.execute(query, [userId]);
     return result;
 }
+
+export const getUsers = async ()=>{
+    const query = `SELECT * FROM users`;
+    const [result] = await pool.execute(query);
+    return result;
+}

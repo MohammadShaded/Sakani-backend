@@ -4,8 +4,8 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
-import userRoutes from "./routes/userRoutes.js"; // Add .js extension
-// import propertyRoutes from "./routes/propertiesRoutes.js"; // Add .js extension
+import userRoutes from "./routes/userRoutes.js"; 
+// import propertyRoutes from "./routes/propertiesRoutes.js"; 
 
 const app = express();
 
